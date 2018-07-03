@@ -63,9 +63,10 @@ jQuery(function(){
   // $('.account_selector').select2('open');
 
   $(".chosen-select").chosen();
-
+  var d = new Date(90,0,1);
   $("._datepicker" ).datepicker({ 
-      dateFormat: 'yy-mm-dd' 
+      defaultDate:d,
+          yearRange: '1930:2018',
    });
 })
 </script>
