@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 use App\Libs\ApiClient;
 
-class Data extends CI_Controller
+class Fees extends CI_Controller
 {
 	function __construct()
 	{
@@ -23,22 +23,14 @@ class Data extends CI_Controller
 	}
 
 
-		public function add_user()
-	{
-			
-			$crud = new grocery_CRUD();
-			$crud->columns('username','email','phone');
-			$crud->add_fields('username','email','phone','role','password','activated');
-			$crud->edit_fields('username','email','phone','role','password');
-			$crud->set_theme('bootstrap');
-			$crud->field_type('activated','hidden', 1);
-			$crud->callback_field('password', array($this,'edit_password_callback'));
-			$crud->callback_before_update(array($this,'on_update_encrypt_password_callback'));
-      $crud->callback_before_insert(array($this,'on_update_encrypt_password_callback'));
-			$crud->set_table('tank_auth_users');
-			$crud->callback_before_delete(array($this,'check_if_cmr_agency_exists'));
-	    $output = $crud->render();
-			$this->_example_output($output);
+		public function payment()
+	{ 
+
+		 $students = Models\StudentsRegistration::paginate(10);
+		
+		 $this->load->view('fees/payment',[
+		 	'data' => $students
+		 ]);
 
 	} 
 

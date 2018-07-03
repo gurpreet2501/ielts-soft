@@ -14,8 +14,11 @@
 
  <script src="<?=base_url('env.js?v='.$cacheVer);?>"></script> 
  <script src="<?=base_url('assets/js/env-support.js?v='.$cacheVer);?>"></script> 
+<script
+        src="https://code.jquery.com/jquery-3.2.0.min.js"
+        integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
+        crossorigin="anonymous"></script>
 
- <script src="<?=base_url('assets/js/jquery.js?v='.$cacheVer);?>"></script>
  
  <script src="<?=base_url('assets/js/mousetrap.min.js?v='.$cacheVer);?>"></script>
  <script src="<?=base_url('assets/js/ctrl-q-click.js?v='.$cacheVer);?>"></script>

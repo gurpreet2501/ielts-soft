@@ -22,25 +22,44 @@ class Student extends CI_Controller
 		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
 	}
 
-
 		public function add_student()
 	{ 
 
 			$crud = new grocery_CRUD();
-			$crud->columns('id','email','phone','city','registration_confirmation');
+			$crud->columns('id','profile_image','email','phone','city','registration_confirmation');
 			$crud->set_table('students_registration');
+			// $crud->set_relation('user_id','users','username');
 			$crud->where('added_by',user_id());
+			$crud->display_as('id','#Student Id');
+			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
+			$crud->unset_texteditor('address');
 			$crud->field_type('registration_confirmation', 'dropdown', array('1' => 'Confirmed', '0' => 'Pending'));
 			$crud->unique_fields(array('email','phone'));
 			$crud->required_fields('name','email','phone','city','address','highest_qualification');
-			$crud->set_field_upload('image','assets/uploads/students/profile_images');
+			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');
 			if($crud->getState()=='add')
 				$crud->field_type('registration_confirmation','hidden',0);
 			$crud->field_type('added_by','hidden',user_id());
 			$crud->field_type('registration_date','hidden',date('Y-m-d H:i:s'));
 			$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
 			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
-			$crud->set_theme('datatables');
+			$crud->set_theme('bootstrap');
+	    $output = $crud->render();
+			$this->_example_output($output);
+
+	} 
+		public function courses()
+	{ 
+
+			$crud = new grocery_CRUD();
+			$crud->set_theme('bootstrap');
+			$crud->columns('course_name','course_fees','course_detail');
+			$crud->set_table('courses');
+			$crud->unset_texteditor('course_detail');
+			$crud->where('added_by',user_id());
+			$crud->field_type('added_by','hidden',user_id());
+			$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
+			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
 	    $output = $crud->render();
 			$this->_example_output($output);
 
