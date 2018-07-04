@@ -26,12 +26,15 @@ class Student extends CI_Controller
 	{ 
 
 			$crud = new grocery_CRUD();
-			$crud->columns('student_unique_code','email','phone','city','registration_date','registration_confirmation');
+			$crud->columns('student_unique_code','email','phone','registration_date','registration_confirmation');
 			$crud->set_table('students_registration');
 			// $crud->set_relation('user_id','users','username');
 			$crud->where('added_by',user_id());
 			$crud->display_as('id','#Student Id');
 			$crud->callback_after_insert(array($this, 'update_student_unique_code'));
+			$crud->set_relation('country_id','countries','name');
+			$crud->set_relation('state_id','states','name');
+			$crud->set_relation('city_id','cities','name');
 			$crud->callback_after_update(array($this, 'update_student_unique_code'));
 			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
 			$crud->unset_texteditor('address');
