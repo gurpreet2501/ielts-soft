@@ -42,7 +42,11 @@
 	</div>
 	<div class="col-md-2"></div>
 	<div class="col-md-5">
-			<h2>Fee Details</h2>
+
+			<h2 class="text-center">Fee Details</h2>
+			<?php if(!count($fees_details)): ?>
+					<div ><h3 class="text-center">No Records Found !</h3></div>
+			<?php endif; ?>
 		<?php  foreach ($fees_details as $course_name => $detail): 
 							$total_course_fees = isset($detail[0]['course_details']['course_fees']) ? $detail[0]['course_details']['course_fees'] : 0; 
 			?>
