@@ -23,14 +23,23 @@ class Fees extends CI_Controller
 	}
 
 
-		public function payment()
+		public function payment($id)
 	{ 
-
-		 $students = Models\StudentsRegistration::paginate(10);
 		
-		 $this->load->view('fees/payment',[
-		 	'data' => $students
-		 ]);
+		$student_details = Models\StudentsRegistration::where('id',$id)->with('feesDetails.courseDetails')->first();
+
+ 		$student_details = $student_details->toArray();
+		$fees_details = [];
+		if(count($student_details['fees_details'])){
+			$fees_details = clubFeeTransactions($student_details['fees_details']);
+		}
+		
+		$data = [
+			'student_details' => $student_details,
+			'fees_details' => $fees_details,
+		];
+
+		 $this->load->view('fees/payment',$data);
 
 	} 
 

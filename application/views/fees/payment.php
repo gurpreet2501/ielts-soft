@@ -1,30 +1,79 @@
 <?php $this->load->view('admin/partials/header'); ?>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-5">
 		<div class="text-center">
-			<h2>Students Data</h2>
+			<h2>Student Details</h2>
 			<table class="table table-bordered">
 				<tr>
-					<th>#ID</th>
-					<th>Name</th>
-					<th>Phone</th>
-					<th>Email</th>
-					<th>Pending Fees</th>
-					<th>Total Fees Paid</th>
-					<th>Actions</th>
+					<td align="right"><strong>#Student Unique Code :</strong></td>
+					<td align="left">#<?=$student_details['student_unique_code']?></td>
 				</tr>
-			<?php foreach ($data as $key => $v): ?>
-					<tr>
-						<td>#<?=$v->id?></td>
-						<td><?=$v->name?></td>
-						<td><?=$v->phone?></td>
-						<td><?=$v->email?></td>
-						<td><span class="color-red">2000</span></td>
-						<td><span class="color-green">3000</span></td>
-					</tr>
-				<?php endforeach ?>	
+				<tr>
+					<td align="right"><strong>Name :</strong></td>
+					<td align="left"><?=$student_details['name']?></td>
+				</tr>
+				<tr>
+					<td align="right"><strong>Email :</strong></td>
+					<td align="left"><?=$student_details['email']?></td>
+				</tr>
+				<tr>
+					<td align="right"><strong>Phone :</strong></td>
+					<td align="left"><?=$student_details['phone']?></td>
+				</tr>
+				<tr>
+					<td align="right"><strong>Fathers Name :</strong></td>
+					<td align="left"><?=$student_details['fathers_name']?></td>
+				</tr>
+				<tr>
+					<td align="right"><strong>Address :</strong></td>
+					<td align="left"><?=$student_details['address']?></td>
+				</tr>
+				<tr>
+			   <td align="right"><strong>Highest Qualification :</strong></td>
+					<td align="left"><?=$student_details['highest_qualification']?></td>
+				</tr>
+				<tr>
+					<td align="right"><strong>Zip Code :</strong></td>
+					<td align="left"><?=$student_details['zip_code']?></td>
+				</tr>
+
 			</table>
 		</div>
+	</div>
+	<div class="col-md-2"></div>
+	<div class="col-md-5">
+			<h2>Fee Details</h2>
+		<?php  foreach ($fees_details as $course_name => $detail): 
+							$total_course_fees = isset($detail[0]['course_details']['course_fees']) ? $detail[0]['course_details']['course_fees'] : 0; 
+			?>
+			<div class="text-center"><h3><?=$course_name?></h3></div>
+			<div class="text-center"><h4>Transaction Details</h4></div>
+			<table class="table table-bordered">
+				<tr>
+					<td>Amount</td>
+					<td>Date</td>
+				</tr>
+				<?php $total_submitted_fees = 0; foreach ($detail as $key => $transaction):
+				$total_submitted_fees = $total_submitted_fees + $transaction['fees_amount'];
+				?>
+					<tr>
+						<td><span class="color-green">+&nbsp;<?=$transaction['fees_amount']?></span></td>
+						<td><?=date('M d,Y',strtotime($transaction['fee_submission_date']))?></td>
+					</tr>
+				<?php endforeach ?>				
+					<tr>
+						<td>Total Fees Submitted: <?=$total_submitted_fees?></td>
+						<?php if($total_submitted_fees < $total_course_fees): ?>
+							<td>Pending Amount: <span class="color-red"><?=$total_course_fees-$total_submitted_fees?></span></td>
+						<?php else: ?>		
+							<td><span class="label label-success">PAID</span></td>
+						<?php endif; ?>		
+
+					</tr>					
+			</table>
+			<hr>
+ 	  <?php endforeach ?>			
+
 	</div>
 </div>
 <?php $this->load->view('admin/partials/footer'); ?>

@@ -100,6 +100,61 @@ function addCashAccount(){
 }
 
 
+function getPaySlips(){
+    return vex.dialog.open({
+      message: 'Enter Account Name:', showCloseButton: true,
+         className: 'vex-theme-os',
+      input: [
+            '<div id="cashAccount">',
+              '<div class="form-group">',
+                '<input name="account_name" type="text" placeholder="Enter Account Name" required />',
+                '<input name="primary_account_id" v-model="primary_account_id" type="hidden" placeholder="Enter Account Name" required />',
+              '</div>',
+              '<div class="form-group">',
+                '<select2 class="form-control" name="account_group" :options="groups"  text="name"',
+                'id="id">',
+                '<option disabled value="0">Select Group</option>',
+                '</select2>',
+              '</div>',
+            '</div>',
+      ].join(''),
+      buttons: [
+          jQuery.extend({}, vex.dialog.buttons.YES, { text: 'Add' }),
+          jQuery.extend({}, vex.dialog.buttons.NO, { text: 'Back' })
+      ],
+      afterOpen :function(){
+        new Vue({
+          el: '#cashAccount',
+          data: {
+                  groups: v('account_groups'),
+                  primary_account_id: v('primary_account_id'),
+               }
+             });
+      },
+      callback: function (data) {
+          if (!data) {
+              console.log('Cancelled')
+          } else {
+
+              $.ajax({
+                method: "POST",
+                url: getBaseUrl()+'/api/accounts/addCashTransactionAccount',
+                data: { name: data.account_name, account_group:data.account_group,primary_account_id:data.primary_account_id}
+              })
+                .done(function( msg ) {
+                  var msg = JSON.parse(msg);
+                   
+                  window.CASH_TRANSACTIONS.accounts.push(msg.RESPONSE);
+                 
+              }); //.done
+          } //else
+      } //callback
+  });   
+
+}
+
+
+
 function addAccInCrudScreen(){
     return vex.dialog.open({
       message: 'Enter Account Name:', showCloseButton: true,
