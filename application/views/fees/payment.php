@@ -49,13 +49,13 @@
 					<input type="text" name="fees_amount" class="form-control" />					
 				</div>
 				<div class="form-group">
-					<input type="hidden" name="student_id" class="form-control" />					
+					<input type="hidden" name="student_id" class="form-control" value="<?=$student_id?>"/>					
 				</div>
 				<div class="form-group">
 					<label>Select Course</label>
-					<select class='form-control'>
+					<select class='form-control' name="course_id">
 						<?php foreach ($courses as $key => $course):?>
-								<option value="<?=$course->id?>"><?=$course->courseDetails->course_name?></option>
+								<option value="<?=$course->courseDetails->id?>"><?=$course->courseDetails->course_name?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -69,10 +69,9 @@
 					<div ><h3 class="text-center">No Records Found !</h3></div>
 			<?php endif; ?>
 		<?php  foreach ($fees_details as $course_name => $detail): 
-		
 							$total_course_fees = isset($detail[0]['course_details']['course_fees']) ? $detail[0]['course_details']['course_fees'] : 0; 
 			?>
-			<div class="text-center"><h3><?=$course_name?></h3></div>
+			<div class="text-center"><h3><?=$course_name?>(Fees: Rs.<?=$total_course_fees?>) </h3></div>
 			<div class="text-center"><h4>Transaction Details</h4></div>
 			<table class="table table-bordered">
 				<tr>

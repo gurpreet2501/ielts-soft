@@ -40,7 +40,8 @@ class Fees extends CI_Controller
 		$data = [
 			'student_details' => $student_details,
 			'fees_details' => $fees_details,
-			'courses' => $courses
+			'courses' => $courses,
+			'student_id' => $id
 		];
 
 		 $this->load->view('fees/payment',$data);
@@ -48,9 +49,15 @@ class Fees extends CI_Controller
 	} 
 
 	public function pay(){
-		echo "<pre>";
-		print_r($_POST);
-		exit;
+		$data = $_POST;
+		Models\FeesDetails::create([
+			'fees_amount' => $data['fees_amount'],
+			'students_registration_id' => $data['student_id'],
+			'course_id' => $data['course_id'],
+			'fee_submission_date' => date('Y-m-d H:i:s')
+		]);
+		success('Fees Paid Successfully');
+		redirect('fees/details/'.$data['student_id']);
 	}
 
 
