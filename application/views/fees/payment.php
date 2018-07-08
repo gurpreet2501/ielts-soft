@@ -42,12 +42,34 @@
 	</div>
 	<div class="col-md-2"></div>
 	<div class="col-md-5">
+			<h2>Pay Fees</h2>
+			<form action="<?=site_url('fees/pay')?>" method="post">
+				<div class="form-group">
+					<label>Fees Amount</label>
+					<input type="text" name="fees_amount" class="form-control" />					
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="student_id" class="form-control" />					
+				</div>
+				<div class="form-group">
+					<label>Select Course</label>
+					<select class='form-control'>
+						<?php foreach ($courses as $key => $course):?>
+								<option value="<?=$course->id?>"><?=$course->courseDetails->course_name?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+				<input type="submit" name="submit" class="btn btn-danger" value="Pay" />
 
-			<h2 class="text-center">Fee Details</h2>
+			</form>
+
+
+			<h2 class="text-center">Paid Fee Details</h2>
 			<?php if(!count($fees_details)): ?>
 					<div ><h3 class="text-center">No Records Found !</h3></div>
 			<?php endif; ?>
 		<?php  foreach ($fees_details as $course_name => $detail): 
+		
 							$total_course_fees = isset($detail[0]['course_details']['course_fees']) ? $detail[0]['course_details']['course_fees'] : 0; 
 			?>
 			<div class="text-center"><h3><?=$course_name?></h3></div>
@@ -57,18 +79,24 @@
 					<td>Amount</td>
 					<td>Date</td>
 				</tr>
-				<?php $total_submitted_fees = 0; foreach ($detail as $key => $transaction):
-				$total_submitted_fees = $total_submitted_fees + $transaction['fees_amount'];
+				
+				<?php $total_submitted_fees = 0; 
+				foreach ($detail as $key => $transaction):
+					$total_submitted_fees = $total_submitted_fees + $transaction['fees_amount'];
 				?>
 					<tr>
 						<td><span class="color-green">+&nbsp;<?=$transaction['fees_amount']?></span></td>
 						<td><?=date('M d,Y',strtotime($transaction['fee_submission_date']))?></td>
 					</tr>
 				<?php endforeach ?>				
+
 					<tr>
 						<td>Total Fees Submitted: <?=$total_submitted_fees?></td>
 						<?php if($total_submitted_fees < $total_course_fees): ?>
-							<td>Pending Amount: <span class="color-red"><?=$total_course_fees-$total_submitted_fees?></span></td>
+							<td>
+								Pending Amount: <span class="color-red"><?=$total_course_fees-$total_submitted_fees?></span>
+								
+							</td>
 						<?php else: ?>		
 							<td><span class="label label-success">PAID</span></td>
 						<?php endif; ?>		

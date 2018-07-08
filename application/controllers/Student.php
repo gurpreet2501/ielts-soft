@@ -28,7 +28,7 @@ class Student extends CI_Controller
 			$crud = new grocery_CRUD();
 			$crud->columns('student_unique_code','email','phone','registration_date','registration_confirmation');
 			$crud->set_table('students_registration');
-			$crud->add_action('Pay Fees', '', 'fees/payment','fa fa-cc-visa');
+			$crud->add_action('Pay Fees', '', 'fees/details','fa fa-cc-visa');
 			$crud->where('added_by',user_id());
 			$crud->display_as('id','#Student Id');
 			$crud->callback_after_insert(array($this, 'update_student_unique_code'));

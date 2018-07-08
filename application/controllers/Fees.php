@@ -23,9 +23,12 @@ class Fees extends CI_Controller
 	}
 
 
-		public function payment($id)
+		public function details($id)
 	{ 
+
+		$courses = Models\StudentsRegistrationCourses::where('students_registration_id', $id)->with('courseDetails')->get();
 		
+   
 		$student_details = Models\StudentsRegistration::where('id',$id)->with('feesDetails.courseDetails')->first();
 
  		$student_details = $student_details->toArray();
@@ -37,11 +40,18 @@ class Fees extends CI_Controller
 		$data = [
 			'student_details' => $student_details,
 			'fees_details' => $fees_details,
+			'courses' => $courses
 		];
 
 		 $this->load->view('fees/payment',$data);
 
 	} 
+
+	public function pay(){
+		echo "<pre>";
+		print_r($_POST);
+		exit;
+	}
 
 
 	function on_update_encrypt_password_callback($post_array){
