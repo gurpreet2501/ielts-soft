@@ -1,8 +1,9 @@
 <?php $this->load->view('admin/partials/header'); ?>
 <div class="row">
 	<div class="col-md-4">
-		 <button type="button" class="btn btn-success">PAY FEES</button>
+		 <button type="button" class="btn btn-success pay-fees-btn">PAY FEES</button>
 		 <div class="payment-form">
+		 	<h3>Enter Transaction Details Below:</h3>
 			<form action="<?=site_url('fees/pay')?>" method="post">
 				<div class="form-group">
 					<input type="text" name="fees_amount" class="form-control" placeholder="Enter Fees Amount" />					
