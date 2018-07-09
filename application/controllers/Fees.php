@@ -27,8 +27,7 @@ class Fees extends CI_Controller
 	{ 
 
 		$courses = Models\StudentsRegistrationCourses::where('students_registration_id', $id)->with('courseDetails')->get();
-		
-   
+		   
 		$student_details = Models\StudentsRegistration::where('id',$id)->with('feesDetails.courseDetails')->first();
 
  		$student_details = $student_details->toArray();
@@ -44,7 +43,13 @@ class Fees extends CI_Controller
 			'student_id' => $id
 		];
 
-		 $this->load->view('fees/payment',$data);
+		$jsFiles = [
+			base_url('assets/js/hide-payment-panel.js?432'),
+		];
+		
+		$data['js_files'] = $jsFiles;
+
+		$this->load->view('fees/details',$data);
 
 	} 
 

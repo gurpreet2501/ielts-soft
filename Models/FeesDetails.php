@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class FeesDetails extends Model
 { 
     protected $table    = 'fees_details';
-    protected $fillable    = ['fees_amount','course_id','students_registration_id','fees_submission_date'];
+    protected $fillable    = ['fees_amount','course_id','students_registration_id','fee_submission_date'];
 
  	  function courseDetails(){
     	return $this->hasOne(Courses::class,'id','course_id');
