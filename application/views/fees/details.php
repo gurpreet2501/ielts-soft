@@ -2,6 +2,7 @@
 <div class="row">
 	<div class="col-md-4">
 		 <button type="button" class="btn btn-success pay-fees-btn">PAY FEES</button>
+		 <button type="button" class="btn btn-warning send-sms-btn">Send SMS</button>
 		 <div class="payment-form">
 		 	<h3>Enter Transaction Details Below:</h3>
 			<form action="<?=site_url('fees/pay')?>" method="post">
@@ -21,6 +22,16 @@
 				</div>
 				<input type="submit" name="submit" class="btn btn-danger" value="Pay" />
 			</form>
+		 </div>
+		 <div class="sms-form">
+		 	<form action="<?=site_url('sms/send')?>" method="post" id="sms_form_">
+		 		<div class="form-group">
+			 		<textarea name="message" class="form-control" rows="2"></textarea>
+			 		<input type="hidden" name="phone" value="<?=$student_details['phone']?>">
+			 		<input type="hidden" name="student_id" value="<?=$student_details['id']?>">
+			 		<input type="submit" name="" value="Send Sms" />
+		 		</div>
+		 	</form>
 		 </div>
 		<div class="text-center">
 			<h2>Student Details</h2>

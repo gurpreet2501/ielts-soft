@@ -2,8 +2,15 @@
   color:red;
 }
 
+.payment-form{
+    display: none
+}
 .input-error{
   border:1px solid red;
+}
+
+.sms-form{
+    display: none
 }
 
 .form-horizontal .control-label {
