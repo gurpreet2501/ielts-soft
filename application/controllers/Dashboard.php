@@ -9,8 +9,8 @@ class Dashboard extends CI_Controller
 		auth_force();
 		$this->load->helper('url');
 		$this->load->library('tank_auth');
-		if(user_role() != 'ADMIN')
-    	redirect('auth/logout');
+		// if(user_role() != 'ADMIN')
+  //   	redirect('auth/logout');
 	}
 
 	function index()

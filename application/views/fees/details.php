@@ -1,5 +1,10 @@
 <?php $this->load->view('admin/partials/header'); ?>
 <div class="row">
+	<div class="col-md-12">
+			<a onclick="goBack()"><button class="btn btn-success pull-right">Back</button></a>
+	</div>
+</div>
+<div class="row">
 	<div class="col-md-4">
 		 <button type="button" class="btn btn-success pay-fees-btn">PAY FEES</button>
 		 <button type="button" class="btn btn-warning send-sms-btn">Send SMS</button>

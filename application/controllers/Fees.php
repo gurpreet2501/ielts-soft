@@ -17,6 +17,22 @@ class Fees extends CI_Controller
 		$this->load->view('crud.php',(array)$output);
 	}
 
+	public function payment_selection(){
+			$students = Models\StudentsRegistration::where('added_by',user_id())->get();
+			$this->load->view('fees/payment_selection',[
+				'students' => $students
+			]);
+	}
+ 	
+ 	public function payment_post(){
+		
+		if(empty($_POST['student_id']))
+			return 404;
+
+		redirect('fees/details/'.$_POST['student_id']);
+
+	}
+
 	public function index()
 	{
 		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
