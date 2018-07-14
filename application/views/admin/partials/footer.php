@@ -42,7 +42,7 @@
    <script type="text/javascript" src="<?=base_url('assets/js/auto-logout.js?v='.$cacheVer)?>"></script>
 <?php endif; ?>
 
- <?php if(isset($js_files)): ?>
+ <?php  if(isset($js_files)): ?>
   <?php  foreach($js_files as $js_file): 
       if(strstr($js_file,'jquery-1.11.1.min.js')){
         continue;

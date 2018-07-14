@@ -1,5 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 use App\Libs\ApiClient;
+use App\Libs\MobileSms;
 
 class Student extends CI_Controller
 {
@@ -20,6 +21,42 @@ class Student extends CI_Controller
 	public function index()
 	{
 		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
+	}
+
+	public function bulk_sms(){
+		$courses = Models\Courses::where('added_by',user_id())->get();
+
+		$js_files = [
+			base_url('assets/js/input-clearance.js')
+		];
+
+		$data['js_files'] = $js_files;
+		$data['courses'] = $courses;
+
+		$this->load->view('student/bulk-sms',$data);
+	}
+
+	public function bulk_sms_post(){
+		
+		
+		foreach ($_POST as $key => $value)
+			$data[$key] = htmlspecialchars($value);
+		
+		  $students = Models\StudentsRegistration::with('studentCourses')->where('added_by', user_id())->get();
+		$phone_nos = [];
+		
+		foreach ($students as $key => $student) {
+			foreach ($student->studentCourses as $key => $course) {
+				if($course->pivot->course_id == $data['course_id']){
+							$phone_nos[] = 	$student->phone;
+				}
+
+			}
+		}
+
+		MobileSms::sendToMany($phone_nos,$data['sms_text']);			
+		success('Sms Sent Successfully');
+		redirect('student/bulk_sms');
 	}
 
 		public function add_student()
