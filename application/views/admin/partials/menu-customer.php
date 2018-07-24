@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav">
+<ul class="nav navbar-nav side-nav">
     <li class="">
       <a href='<?=site_url('/customerDashboard/index')?>'>Home</a> 
     </li>
@@ -15,3 +15,4 @@
       <a href='<?=site_url('student/bulk_sms')?>'>Bulk Sms</a> 
     </li>
   </ul>
+

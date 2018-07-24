@@ -6,7 +6,7 @@
         </div>
         <!-- /#page-wrapper -->
 
-    </div>  
+   
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -29,10 +29,40 @@
 
  <script type="text/javascript" src="<?=base_url('assets/js/jquery-validate.js?v='.$cacheVer)?>"></script>
 
- <script type="text/javascript" src="<?=base_url('assets/js/vue.min.js?v='.$cacheVer)?>"></script>
- <script type="text/javascript" src="<?=base_url('assets/js/vue-select.js?v='.$cacheVer)?>"></script>
- <script type="text/javascript" src="<?=base_url('assets/js/app.js?v='.$cacheVer)?>"></script>
- <script type="text/javascript" src="<?=base_url('assets/js/vex.combined.min.js?v='.$cacheVer)?>"></script>
+ <script src="<?=base_url('assets/plugins/bootstrap-select/js/bootstrap-select.js')?>"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="<?=base_url('assets/plugins/jquery-slimscroll/jquery.slimscroll.js')?>"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="<?=base_url('assets/plugins/node-waves/waves.js')?>"></script>
+
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="<?=base_url('assets/plugins/jquery-countto/jquery.countTo.js')?>"></script>
+
+    <!-- Morris Plugin Js -->
+    <script src="<?=base_url('assets/plugins/raphael/raphael.min.js')?>"></script>
+    <script src="<?=base_url('assets/plugins/morrisjs/morris.js')?>"></script>
+
+    <!-- ChartJs -->
+    <script src="<?=base_url('assets/plugins/chartjs/Chart.bundle.js')?>"></script>
+
+    <!-- Flot Charts Plugin Js -->
+    <script src="<?=base_url('assets/plugins/flot-charts/jquery.flot.js')?>"></script>
+    <script src="<?=base_url('assets/plugins/flot-charts/jquery.flot.resize.js')?>"></script>
+    <script src="<?=base_url('assets/plugins/flot-charts/jquery.flot.pie.js')?>"></script>
+    <script src="<?=base_url('assets/plugins/flot-charts/jquery.flot.categories.js')?>"></script>
+    <script src="<?=base_url('assets/plugins/flot-charts/jquery.flot.time.js')?>"></script>
+
+    <!-- Sparkline Chart Plugin Js -->
+    <script src="<?=base_url('assets/plugins/jquery-sparkline/jquery.sparkline.js')?>"></script>
+
+     <script src="<?=base_url('assets/special-js/admin.js')?>"></script>
+     <script src="<?=base_url('assets/special-js/pages/index.js')?>"></script>
+    <!-- Demo Js -->
+     <script src="<?=base_url('assets/special-js/demo.js')?>"></script>
+
+
  <script type="text/javascript">
   function getBaseUrl(){
     return <?=json_encode(site_url())?>;
@@ -51,7 +81,7 @@
     <script type="text/javascript" src="<?=at($js_file).'?v='.$cacheVer?>"></script>
   <?php endforeach; ?>
 <?php endif;?>
- <script type="text/javascript" src="<?=base_url('assets/js/party-name-pop-up.js?v='.$cacheVer)?>"></script>
+
 
 <script type="text/javascript">
 jQuery(function(){
