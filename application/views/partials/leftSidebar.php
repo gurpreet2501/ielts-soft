@@ -3,23 +3,12 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="images/user.png" width="48" height="48" alt="User" />
+                    <img src="<?php base_url(); ?>assets/images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
                     <div class="email">john.doe@example.com</div>
-                    <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
-                        </ul>
-                    </div>
+                   
                 </div>
             </div>
             <!-- #User Info -->
@@ -28,21 +17,31 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="<?=site_url('/customerDashboard/index')?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="<?=site_url('student/add_student')?>">
                             <i class="material-icons">text_fields</i>
-                            <span>Typography</span>
+                            <span>Student Section</span>
                         </a>
                     </li>
                     <li>
-                        <a href="pages/helper-classes.html">
+                        <a href="<?=site_url('student/courses')?>">
                             <i class="material-icons">layers</i>
-                            <span>Helper Classes</span>
+                            <span>Add Course</span>
+                        </a>
+                    </li>					<li>
+                        <a href="<?=site_url('fees/payment_selection')?>">
+                            <i class="material-icons">layers</i>
+                            <span>Fees Payment</span>
+                        </a>
+                    </li>					<li>
+                        <a href="<?=site_url('student/bulk_sms')?>">
+                            <i class="material-icons">layers</i>
+                            <span>Group SMS</span>
                         </a>
                     </li>
                     <li>
@@ -365,7 +364,7 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                    &copy; 2018 - 2019 <a href="http://zedstart.com/">Zedstart Solutions</a>.
                 </div>
                 <div class="version">
                     <b>Version: </b> 1.0.5

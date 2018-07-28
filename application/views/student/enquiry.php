@@ -1,8 +1,9 @@
 <?php $this->load->view('admin/partials/header'); ?>
+<?php $this->load->view('partials/leftSidebar'); ?>
+
 <div class="row">
 	<div class="col-md-12">
-		<h3 class="text-center">Registration Form</h3>
-	</div>
+		<h3 class="text-center">Registration Form</h3>    </div>
 </div>
 <div class="row">
 	<div class="col-md-4"></div>

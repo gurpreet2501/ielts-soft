@@ -1,15 +1,14 @@
 <?php $this->load->view('admin/partials/header'); ?>
-<div class="row">
-	<div class="col-md-3">
-		<?php $this->load->view('partials/leftSidebar'); ?>
-	</div>
-	<div class="col-md-9">
+
+<?php $this->load->view('partials/leftSidebar'); ?>
+
+	
 			<!-- Content  section		 -->
 			 <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>DASHBOARD</h2>
-            </div>
+              <div class="container-fluid">
+				<div class="block-header">
+					<h2>DASHBOARD</h2>
+				</div>
 
             <!-- Widgets -->
             <div class="row clearfix">
@@ -318,11 +317,7 @@
     </section>
 
 			<!-- Content  section ends		 -->
-	</div>
-</div>
-
-
-<!-- old garbage -->
+<!-- old garbage --><!--
 <div class="row">
 	<div class="col-xs-12">
 		<h1 class="text-center">IELTS SOFTWARE</h1>
@@ -343,5 +338,5 @@
 		<div class="col-md-4"></div>
 		<div class="col-md-4"></div>
 	</div>
-</div>	
+</div>-->	
 <?php $this->load->view('admin/partials/footer'); ?>

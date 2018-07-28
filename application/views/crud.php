@@ -1,13 +1,28 @@
 <? $this->load->view('admin/partials/header') ?>
+<style type="text/css">
+	.container{
+		width:100% !important;
+	}
+</style>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+				<?php $this->load->view('partials/leftSidebar'); ?>
+		</div>
+		<div class="col-md-9">
+						<div class="block-header">
+			            <h2><?=!empty($title) ? $title : ''?></h2>
+			      </div>
+		           
+				  <div class="margin-top-100"></div>	
+					<?php echo $output;  ?>
 
-<div class="row">
-  <div class="col-lg-12">
-  	<h3 class="text-center"><?=!empty($title) ? $title : ''?></h3>
-  </div>
-</div>  	
-<div class="row">
-  <div class="col-lg-12">
-    <?php echo $output;  ?>
-  </div>
-</div>
+					
+					</div>
+
+			</div> <!-- row -->
+</div> <!-- container -->	
+
+
 <? $this->load->view('admin/partials/footer') ?>
+

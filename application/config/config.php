@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['auto_logout'] = false;
 
-$config['base_url'] = env('base_url','http://ielts-web-soft.com');
+$config['base_url'] = env('base_url','http://zedbits.com/ielts-software/');
 
 // Set value false to make fields readonly. (i.e. Uneditable)
 // $config['allow_common_field_edit'] = [
