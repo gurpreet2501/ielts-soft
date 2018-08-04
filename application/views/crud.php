@@ -6,19 +6,21 @@
 </style>
 <div class="container">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-2">
 				<?php $this->load->view('partials/leftSidebar'); ?>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
+			<div class="content-section">
+					
 						<div class="block-header">
 			            <h2><?=!empty($title) ? $title : ''?></h2>
 			      </div>
-		           
-				  <div class="margin-top-100"></div>	
-					<?php echo $output;  ?>
+					  <div class="margin-top-100"></div>	
+						<?php echo $output;  ?>
 
-					
-					</div>
+						
+						</div>
+			</div>
 
 			</div> <!-- row -->
 </div> <!-- container -->	

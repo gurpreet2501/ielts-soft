@@ -7471,6 +7471,14 @@ fieldset[disabled] .form-control {
   display: none;
   z-index: 10; }
 
+.floatL.t20.l5 {
+    display: none;
+}
+.outer-block {
+    border: 1px solid #888;
+    box-shadow: 4px 5px 12px #888;
+}
+
 .overlay-open .sidebar {
   margin-left: 0;
   z-index: 99999999; }
@@ -7482,7 +7490,7 @@ fieldset[disabled] .form-control {
   transition: all 0.5s;
   font-family: "Roboto", sans-serif;
   background: #fdfdfd;
-  width: 300px;
+  width: 253px;
   overflow: hidden;
   display: inline-block;
   height: calc(100vh - 70px);

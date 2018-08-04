@@ -30,6 +30,7 @@ if(isset($css_files)){
     <link href="<?=base_url('assets/plugins/animate-css/animate.css')?>" rel="stylesheet" />    <!-- Morris Chart Css-->      
     <link href="<?=base_url('assets/plugins/morrisjs/morris.css')?>" rel="stylesheet" />    <!-- Custom Css -->    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?=base_url('assets/css/all-themes.css')?>" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
     <link href="<?=base_url('assets/css/style.css')?>" rel="stylesheet">
 </head>
 <body class="theme-red">

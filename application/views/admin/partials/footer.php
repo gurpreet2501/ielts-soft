@@ -110,6 +110,9 @@
 
 
 
+<!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
      <script src="<?=base_url('assets/special-js/admin.js')?>"></script>
 
      <script src="<?=base_url('assets/special-js/pages/index.js')?>"></script>
@@ -178,7 +181,10 @@ jQuery(function(){
 
   // $('.account_selector').select2('open');
 
-
+  $('.selectpicker').selectpicker({
+    style: 'btn-info',
+  size: 4
+});
 
   $(".chosen-select").chosen();
 
