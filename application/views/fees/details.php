@@ -12,6 +12,7 @@
 				<div class="row">
 				
 					<div class="col-md-6">
+						<div class="outer-block">
 						 <button type="button" class="btn btn-success pay-fees-btn">PAY FEES</button>
 						 <button type="button" class="btn btn-warning send-sms-btn">Send SMS</button>
 						 <div class="payment-form">
@@ -44,8 +45,8 @@
 						 		</div>
 						 	</form>
 						 </div>
-
-					</div>
+						</div> <!-- outer block --> 
+					</div> <!-- col-md-6 -->
 					<div class="col-md-6">
 							<div class="outer-block">
 										<div class="text-center">

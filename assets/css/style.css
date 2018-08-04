@@ -7477,8 +7477,20 @@ fieldset[disabled] .form-control {
 .outer-block {
     border: 1px solid #888;
     box-shadow: 4px 5px 12px #888;
+    padding: 16px;
+    min-height: 505px;
 }
 
+.payment-form{
+
+    display: none
+
+}
+.sms-form{
+
+    display: none
+
+}
 .overlay-open .sidebar {
   margin-left: 0;
   z-index: 99999999; }

@@ -135,14 +135,6 @@
 
  </script>
 
- <?php if($this->config->item('auto_logout')): ?>
-
-   <script type="text/javascript" src="<?=base_url('assets/js/auto-logout.js?v='.$cacheVer)?>"></script>
-
-<?php endif; ?>
-
-
-
  <?php  if(isset($js_files)): ?>
 
   <?php  foreach($js_files as $js_file): 
