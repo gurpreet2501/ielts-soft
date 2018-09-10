@@ -8,7 +8,7 @@
 				<select class="form-control chosen-select" name="student_id">
 					<option selected="true" disabled="true" >-Select Student-</option>		
 					<?php foreach ($students as $key => $student): ?>
-									<option value="<?=$student->id?>"><?=$student->student_unique_code?></option>
+									<option value="<?=$student->id?>"><?=$student->student_unique_code." - ".$student->name?></option>
 					<?php endforeach ?>			
 				</select>
 				<div class="margin-top-10"></div>

@@ -76,16 +76,16 @@ class Student extends CI_Controller
 			$crud->set_relation('country_id','countries','name');
 			$crud->set_relation('state_id','states','name');
 			$crud->set_relation('city_id','cities','name');
-			$crud->callback_after_update(array($this, 'update_student_unique_code'));
+			// $crud->callback_after_update(array($this, 'update_student_unique_code'));
 			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
 			$crud->unset_texteditor('address');
-			$crud->field_type('registration_confirmation', 'dropdown', array('1' => 'Confirmed', '0' => 'Pending'));
+		
 			// $crud->unique_fields(array('email','phone'));
 			$crud->required_fields('name','email','phone','city','address','highest_qualification');
 			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');
 
 			if($crud->getState()=='add'){
-				$crud->field_type('registration_confirmation','hidden',0);
+				$crud->field_type('registration_confirmation','hidden','PENDING');
 			  $crud->field_type('fees_status','hidden');
 			}
 
@@ -100,12 +100,46 @@ class Student extends CI_Controller
 
 	} 
 
+	function file_uploads(){
+			$crud = new grocery_CRUD();
+			$crud->columns('file_url','status');
+			$crud->set_table('file_uploads');
+			$crud->where('added_by',user_id());
+			$crud->where('status',1);
+			$crud->callback_after_update(array($this, 'delete_inactive_files'));
+			$crud->callback_column('file_url',array($this,'_callback_webpage_url'));
+			$crud->set_field_upload('file_url','assets/uploads/files');
+			$crud->field_type('added_by','hidden',user_id());
+  		$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
+			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
+			$crud->set_theme('bootstrap');
+	    $output = $crud->render();
+			$this->_example_output($output);
+
+	}	
+
+	function delete_inactive_files($post_array,$primary_key){
+		 $file_path = __DIR__.'/../../assets/uploads/files/'.$post_array['file_url'];
+		 if(file_exists($file_path)){
+			 	unlink($file_path);
+		 }
+
+		return true;
+
+	}
+
+ function _callback_webpage_url($value, $row)
+	{
+		return "<a target='_BLANK' href='".base_url('assets/uploads/files/'.$value)."'>".base_url('assets/uploads/files/'.$value)."</a>";
+	}
+
   function update_student_unique_code($post_array,$primary_key)
 	{
 		
 		$data = array(
 			"student_unique_code" => 'STU'.$primary_key,
-			'fees_status' => 'UNPAID'
+			'fees_status' => 'PENDING',
+			'registration_confirmation' => 'PENDING'
 		);
 
 		$this->db->update('students_registration', $data, array('id' => $primary_key));	 
@@ -115,7 +149,7 @@ class Student extends CI_Controller
 
 		public function courses()
 	{ 
-
+ 
 			$crud = new grocery_CRUD();
 			$crud->set_theme('bootstrap');
 			$crud->columns('course_name','course_fees','course_detail');

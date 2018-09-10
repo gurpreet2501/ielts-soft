@@ -71,12 +71,25 @@ class Fees extends CI_Controller
 
 	public function pay(){
 		$data = $_POST;
+				
 		Models\FeesDetails::create([
 			'fees_amount' => $data['fees_amount'],
 			'students_registration_id' => $data['student_id'],
 			'course_id' => $data['course_id'],
 			'fee_submission_date' => date('Y-m-d H:i:s')
 		]);
+
+		$flag = isFeesPending($data);
+
+		if($flag)
+			Models\StudentsRegistration::where('id',$data['student_id'])->update([
+				'fees_status' => 'PAID'
+			]);
+		else
+			Models\StudentsRegistration::where('id',$data['student_id'])->update([
+				'fees_status' => 'PENDING'
+			]);
+
 		success('Fees Paid Successfully');
 		redirect('fees/details/'.$data['student_id']);
 	}
