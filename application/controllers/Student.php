@@ -64,11 +64,14 @@ class Student extends CI_Controller
 
 			$crud = new grocery_CRUD();
 			
-			$crud->columns('student_unique_code','email','phone','registration_date','registration_confirmation');
+			$crud->columns('student_unique_code','email','phone','registration_date','registration_confirmation','fees_status');
 			$crud->set_table('students_registration');
 			$crud->add_action('Pay Fees', '', 'fees/details','fa fa-cc-visa');
 			$crud->where('added_by',user_id());
 			$crud->display_as('id','#Student Id');
+			$crud->display_as('city_id','City');
+			$crud->display_as('state_id','State');
+			$crud->display_as('country_id','Country');
 			$crud->callback_after_insert(array($this, 'update_student_unique_code'));
 			$crud->set_relation('country_id','countries','name');
 			$crud->set_relation('state_id','states','name');
@@ -80,8 +83,12 @@ class Student extends CI_Controller
 			// $crud->unique_fields(array('email','phone'));
 			$crud->required_fields('name','email','phone','city','address','highest_qualification');
 			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');
-			if($crud->getState()=='add')
+
+			if($crud->getState()=='add'){
 				$crud->field_type('registration_confirmation','hidden',0);
+			  $crud->field_type('fees_status','hidden');
+			}
+
 			$crud->field_type('added_by','hidden',user_id());
 			$crud->field_type('student_unique_code','hidden');
 			$crud->field_type('registration_date','hidden',date('Y-m-d H:i:s'));
@@ -98,6 +105,7 @@ class Student extends CI_Controller
 		
 		$data = array(
 			"student_unique_code" => 'STU'.$primary_key,
+			'fees_status' => 'UNPAID'
 		);
 
 		$this->db->update('students_registration', $data, array('id' => $primary_key));	 
