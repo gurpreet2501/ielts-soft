@@ -59,6 +59,16 @@ class Student extends CI_Controller
 		redirect('student/bulk_sms');
 	}
 
+	function mark_attendence($data){
+		$data = [
+			'added_by' => user_id(),
+			'machine_id' => $data['machine_id']
+		];
+
+		Models\StudentsAttendence::create();
+	}
+
+
 		public function add_student()
 	{ 
 
