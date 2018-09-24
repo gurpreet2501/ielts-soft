@@ -22,10 +22,8 @@ class Attendence extends CI_Controller
 
 		$obj =  new AttendenceHandler();
 		$resp = $obj->processing($_GET);
-		echo "<pre>";
-		print_r(json_encode($resp,JSON_PRETTY_PRINT));
-		exit;
-		return $resp;
+		echo json_encode($resp,JSON_PRETTY_PRINT);
+		
 	}
 }
 
