@@ -76,14 +76,8 @@ function getAssignedCardDetails($card_serial){
 	if(empty($course_id))
 			return RF::error('Unable to mark attendence. Server Error occured');	
 
-	$resp = $this->markAttendence($card->student_id,$course_id,$card->id, $card->machine_id);
+	return $this->markAttendence($card->student_id,$course_id,$card->id, $card->machine_id);
 
-	echo "<pre>";
-	print_r($resp);
-	exit;
-	echo "<pre>";
-	print_r(date('H:i:s')); 
-	exit;
 
 }
 
