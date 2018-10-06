@@ -98,7 +98,7 @@ function markAttendence($student_id,$course_id,$card_id,$machine_id){
 	$resp = M\StudentsAttendence::create([
 		'course_id' => $course_id,
 		'student_id' => $student_id,
-		'card_id' => $card_id,
+		'card_id' => $card_id, 
 		'added_by' => user_id(),
 		'machine_id' => $machine_id,
 		'attendence_time' => date('Y-m-d H:i:s')
