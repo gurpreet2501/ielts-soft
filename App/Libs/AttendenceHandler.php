@@ -17,10 +17,10 @@ function isMachineValid($data){
 	 						 ->where('disabled',0)
 	 						 ->count();
 	 					
-	 	if(!$resp)
-	  		return RF::error('Either machine is disabled or serial incorrect');	
+	if(!$resp)
+	 		return RF::error('Either machine is disabled or serial incorrect');	
 
-	 	return RF::success();
+	return RF::success();
 	 							 
 
 }
@@ -61,7 +61,71 @@ function ifDataValid($data){
 		if($resp->failed())
 			return $resp->errorsArray();
 
-		// Models\
+		$assigned = $this->getAssignedCardDetails($data['card_serial']);
+
+} 
+
+function getAssignedCardDetails($card_serial){
+	$card = M\Cards::with('student.studentCourses')->where('card_serial',trim($card_serial))->first();
+	
+	if(!count($card->student->studentCourses))
+			return RF::error('Student is not assigned to any course');	
+
+	$course_id = $this->findCurrentCourseAccToCurrentTime($card->student->studentCourses);
+
+	if(empty($course_id))
+			return RF::error('Unable to mark attendence. Server Error occured');	
+
+	$resp = $this->markAttendence($card->student_id,$course_id,$card->id, $card->machine_id);
+
+	echo "<pre>";
+	print_r($resp);
+	exit;
+	echo "<pre>";
+	print_r(date('H:i:s')); 
+	exit;
+
+}
+
+function markAttendence($student_id,$course_id,$card_id,$machine_id){
+
+	$count = M\StudentsAttendence::where('course_id', $course_id)
+										  ->where('card_id', $card_id)
+										  ->where('added_by', user_id())
+										  ->where('machine_id', $machine_id)
+										  ->where('student_id', $student_id)
+										  ->where('created_at','>=', date('Y-m-d 00:00:00'))
+										  ->where('created_at','<=', date('Y-m-d 23:59:59'))
+										  ->count();
+									
+	if($count)
+		return RF::error('Attendence already exists');
+ 
+	$resp = M\StudentsAttendence::create([
+		'course_id' => $course_id,
+		'student_id' => $student_id,
+		'card_id' => $card_id,
+		'added_by' => user_id(),
+		'machine_id' => $machine_id,
+		'attendence_time' => date('Y-m-d H:i:s')
+	]);
+
+
+	return $resp;
+
+
+}
+
+function findCurrentCourseAccToCurrentTime($courses){
+	foreach ($courses as $key => $course) {
+		
+		$current_time = date('H:i:s');
+
+		if($course->start_time <  $current_time &&  $course->end_time >  $current_time){
+			return $course->id;
+		}
+			
+	}
 
 }
 

@@ -19,7 +19,7 @@ class Attendence extends CI_Controller
 	{
 		if(empty($_GET))
 			return 404;
-
+	
 		$obj =  new AttendenceHandler();
 		$resp = $obj->processing($_GET);
 		echo json_encode($resp,JSON_PRETTY_PRINT);
