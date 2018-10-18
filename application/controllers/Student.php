@@ -36,6 +36,25 @@ class Student extends CI_Controller
 		$this->load->view('student/bulk-sms',$data);
 	}
 
+	function filter_students_attendence(){
+		
+		if(empty($_POST['course_id']))
+			return 404;
+
+		$course_id = $_POST['course_id'];
+		$attendence_data = Models\StudentsAttendence::with('student')
+																						->with('course')
+																						->with('machine')
+																						->where('course_id',$course_id)->get();
+		$this->load->view('student/filter_students_attendence',['attendence_data' => $attendence_data]);
+	}
+
+	function view_attendence(){
+		$courses = Models\Courses::where('added_by', user_id())->get();
+		$data['courses'] = $courses;
+		$this->load->view('student/view_attendence',$data);
+	}
+
 	public function bulk_sms_post(){
 		
 		
@@ -43,7 +62,7 @@ class Student extends CI_Controller
 			$data[$key] = htmlspecialchars($value);
 		
 		  $students = Models\StudentsRegistration::with('studentCourses')->where('added_by', user_id())->get();
-		$phone_nos = [];
+		  $phone_nos = [];
 		
 		foreach ($students as $key => $student) {
 			foreach ($student->studentCourses as $key => $course) {
@@ -58,16 +77,6 @@ class Student extends CI_Controller
 		success('Sms Sent Successfully');
 		redirect('student/bulk_sms');
 	}
-
-	function mark_attendence($data){
-		$data = [
-			'added_by' => user_id(),
-			'machine_id' => $data['machine_id']
-		];
-
-		Models\StudentsAttendence::create();
-	}
-
 
 		public function add_student()
 	{ 

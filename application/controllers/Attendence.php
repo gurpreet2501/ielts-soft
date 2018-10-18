@@ -25,6 +25,10 @@ class Attendence extends CI_Controller
 		echo json_encode($resp,JSON_PRETTY_PRINT);
 		
 	}
+
+	//FUNCTION for View Attebdance
+	
+
 }
 
 /* End of file welcome.php */

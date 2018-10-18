@@ -97,7 +97,7 @@ $get_params = http_build_query($params_data);
 </div>
 <?php  
 	
-
+ 
   	
 	$pagination = pagination_params($gate_entries);
 	// $page = isset($_GET['page_no']) ? $_GET['page_no'] : 1;
