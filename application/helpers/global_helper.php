@@ -16,6 +16,7 @@ function findTotalCourseFeeSubmitted($student_id,$course_id){
 }
 
 function isFeesPending($data){ 
+	$fees_more_than_course_fees = false;
 	$student_id = $data['student_id'];
 	$paid_flag = true;
 	$courses = Models\StudentsRegistrationCourses::where('students_registration_id',$data['student_id'])->get();
@@ -24,7 +25,9 @@ function isFeesPending($data){
 		$total_submitted_fees = findTotalCourseFeeSubmitted($student_id,$course_details->id);
 		if($course_details->course_fees>$total_submitted_fees)
 			$paid_flag = false;
-
+		$total_submitted_fees = 
+		$fees = $course_details->course_fees;
+	
 	}
 	return $paid_flag;
 }

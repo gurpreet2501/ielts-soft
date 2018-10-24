@@ -9,6 +9,9 @@
       <a href='<?=site_url('student/courses')?>'>Add Course</a> 
     </li>
     <li class="">
+      <a href='<?=site_url('student/assign_cards')?>'>Assign Cards</a> 
+    </li>
+    <li class="">
       <a href='<?=site_url('fees/payment_selection')?>'>Fees Payment</a> 
     </li>
     <li class="">

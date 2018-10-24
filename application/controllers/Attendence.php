@@ -8,7 +8,6 @@ class Attendence extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		auth_force();
 		$this->load->helper('url');
 		$this->load->library('tank_auth');
 		// if(user_role() != 'ADMIN')

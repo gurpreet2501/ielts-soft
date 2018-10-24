@@ -33,7 +33,7 @@ function isCardValid($data){
 	 $resp =  M\Cards::where('card_serial',trim($data['card_serial']))
 	 						 ->where('blocked',0)
 	 						 ->count();
-	 					 
+			 
 	 	if(!$resp)
 	  		return RF::error('Either card is missing or blocked');	
 
@@ -41,13 +41,7 @@ function isCardValid($data){
 	 							 
 }
 
-function checkIfMasterMachine(){
 
-}
-
-function checkIfMasterCard(){
-
-}
  
 function ifDataValid($data){
 
@@ -61,13 +55,13 @@ function ifDataValid($data){
 		if($resp->failed())
 			return $resp->errorsArray();
 
-		$assigned = $this->getAssignedCardDetails($data['card_serial']);
+		return $this->getAssignedCardDetails($data['card_serial']);
 
 } 
 
 function getAssignedCardDetails($card_serial){
 	$card = M\Cards::with('student.studentCourses')->where('card_serial',trim($card_serial))->first();
-	
+
 	if(!count($card->student->studentCourses))
 			return RF::error('Student is not assigned to any course');	
 
@@ -82,10 +76,11 @@ function getAssignedCardDetails($card_serial){
 }
 
 function markAttendence($student_id,$course_id,$card_id,$machine_id){
-
+	$student = M\StudentsRegistration::where('id',$student_id)->first();
+	
 	$count = M\StudentsAttendence::where('course_id', $course_id)
 										  ->where('card_id', $card_id)
-										  ->where('added_by', user_id())
+										  ->where('added_by', $student->added_by)
 										  ->where('machine_id', $machine_id)
 										  ->where('student_id', $student_id)
 										  ->where('created_at','>=', date('Y-m-d 00:00:00'))
@@ -99,13 +94,13 @@ function markAttendence($student_id,$course_id,$card_id,$machine_id){
 		'course_id' => $course_id,
 		'student_id' => $student_id,
 		'card_id' => $card_id, 
-		'added_by' => user_id(),
+		'added_by' => $student->added_by,
 		'machine_id' => $machine_id,
 		'attendence_time' => date('Y-m-d H:i:s')
 	]);
 
 
-	return $resp;
+	return  RF::success('Attendence Marked Successfully');
 
 
 }

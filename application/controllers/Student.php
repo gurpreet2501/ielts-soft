@@ -95,19 +95,27 @@ class Student extends CI_Controller
 			$crud->set_relation('country_id','countries','name');
 			$crud->set_relation('state_id','states','name');
 			$crud->set_relation('city_id','cities','name');
+			$crud->set_lang_string('update_error', "Email field cant be empty");
+			$crud->set_lang_string('insert_error', 'Email field cant be empty');
+			$crud->callback_before_insert(array($this,'email_validator'));
+			$crud->callback_before_update(array($this,'student_validations'));
+
+			$crud->set_rules('name', 'Name', 'alpha');
 			// $crud->callback_after_update(array($this, 'update_student_unique_code'));
 			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
 			$crud->unset_texteditor('address');
 		
-			// $crud->unique_fields(array('email','phone'));
-			$crud->required_fields('name','email','phone','city','address','highest_qualification');
+			// $crud->unique_fields(array('email','phone')); 
+			$crud->required_fields('name','phone','city','address','highest_qualification');
 			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');
-
+			$crud->set_rules('email', 'email', 'valid_email');
 			if($crud->getState()=='add'){
 				$crud->field_type('registration_confirmation','hidden','PENDING');
 			  $crud->field_type('fees_status','hidden');
 			}
-
+			if($crud->getState()=='edit')
+			  $crud->field_type('fees_status','hidden');
+			
 			$crud->field_type('added_by','hidden',user_id());
 			$crud->field_type('student_unique_code','hidden');
 			$crud->field_type('registration_date','hidden',date('Y-m-d H:i:s'));
@@ -119,6 +127,31 @@ class Student extends CI_Controller
 
 	} 
 
+	function student_validations($post_array, $primary_key) {
+	
+		$fields = ['name','email','phone','city','address','highest_qualification'];
+		foreach ($fields as $key => $field) {
+			if(empty($post_array[$field]))	 
+				return false;
+		}
+		
+		return true;
+			
+	}
+
+	function email_validator($post_array) {
+
+		$fields = ['name','email','phone','city','address','highest_qualification'];
+		foreach ($fields as $key => $field) {
+			if(empty($post_array[$field]))	 
+				return false;
+		}
+		
+		return true;
+		
+
+	}
+
 	function file_uploads(){
 			$crud = new grocery_CRUD();
 			$crud->columns('file_url','status');
@@ -128,6 +161,20 @@ class Student extends CI_Controller
 			$crud->callback_after_update(array($this, 'delete_inactive_files'));
 			$crud->callback_column('file_url',array($this,'_callback_webpage_url'));
 			$crud->set_field_upload('file_url','assets/uploads/files');
+			$crud->field_type('added_by','hidden',user_id());
+  		$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
+			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
+			$crud->set_theme('bootstrap');
+	    $output = $crud->render();
+			$this->_example_output($output);
+
+	}	
+	function assign_cards(){
+			$crud = new grocery_CRUD();
+			// $crud->columns('file_url','status');
+			$crud->set_table('assigned_cards');
+			$crud->where('assigned_cards.added_by',user_id());
+			$crud->set_relation('student_id','students_registration','{student_unique_code} - {name}',array('students_registration.added_by' => user_id()));
 			$crud->field_type('added_by','hidden',user_id());
   		$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
 			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
