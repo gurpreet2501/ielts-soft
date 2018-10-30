@@ -1,13 +1,8 @@
 <?php $this->load->view('admin/partials/header'); ?>
 <div class="row">
 	<div class="col-xs-12">
-		<h1 class="text-center">IELTS SOFTWARE</h1>
-
-
-      <!--Start Dashboard Content-->
-      
-      <div class="row mt-4">
-        <div class="col-12 col-lg-6 col-xl-3">
+      <div class="row">
+        <div class="col-md-3">
           <div class="card gradient-purpink">
             <div class="card-body">
               <div class="media">
@@ -20,7 +15,7 @@
             </div>
           </div>
         </div>
-		<div class="col-12 col-lg-6 col-xl-3">
+		 <div class="col-md-3">
           <div class="card gradient-scooter">
             <div class="card-body">
               <div class="media">
@@ -33,7 +28,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-6 col-xl-3">
+        <div class="col-md-3">
           <div class="card gradient-ibiza">
             <div class="card-body">
               <div class="media">
@@ -46,7 +41,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-6 col-xl-3">
+        <div class="col-md-3">
           <div class="card gradient-ohhappiness">
             <div class="card-body">
               <div class="media">
