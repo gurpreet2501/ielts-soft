@@ -20,6 +20,7 @@ if(isset($css_files)){
 ?>
  <link href="<?=base_url('assets/css/sb-admin.css?v='.$cacheVer)?>" rel="stylesheet">
  <link href="<?=base_url('assets/css/style.css?v='.$cacheVer)?>" rel="stylesheet">
+ <link href="<?=base_url('assets/css/app-style.css?v='.$cacheVer)?>" rel="stylesheet">
  
 
 <style type='text/css'>

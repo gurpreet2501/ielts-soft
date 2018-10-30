@@ -1,6 +1,6 @@
 <ul class="nav navbar-nav">
     <li class="">
-      <a href='<?=site_url('/customerDashboard/index')?>'>Home</a> 
+      <a href='<?=site_url('/customer')?>'>Home</a> 
     </li>
     <li class="">
       <a href='<?=site_url('student/add_student')?>'>Student Section</a> 
