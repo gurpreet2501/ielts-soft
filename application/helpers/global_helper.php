@@ -5,6 +5,7 @@ function clubFeeTransactions($fee_details){
 	foreach ($fee_details as $key => $detail) {
 	
 		$organised_data[$detail['course_details']['course_name']][] = $detail;
+
 	}
 	return $organised_data;
 }
@@ -15,19 +16,60 @@ function findTotalCourseFeeSubmitted($student_id,$course_id){
 										
 }
 
+function findPendingFees($courses,$transactions){
+	$fees_details = [];
+
+	  foreach ($courses as $key => $course) {
+		 
+				  $total_trx_amount = 0; 
+
+				  
+					if(!isset($transactions[$course->courseDetails->course_name])){
+						continue;
+					}
+
+
+					foreach ($transactions[$course->courseDetails->course_name] as $key => $trx)
+						$total_trx_amount = $total_trx_amount + $trx['fees_amount'];
+						
+					$fees_details[$key]['course_name']  = $course->courseDetails->course_name; 
+					$fees_details[$key]['fees_submitted']  = $total_trx_amount; 
+					$fees_details[$key]['total_fees']  = $course->courseDetails->course_fees; 
+					$fees_details[$key]['fees_pending'] = $course->courseDetails->course_fees - $total_trx_amount;
+
+				}
+		
+
+	return $fees_details;
+}
+
+
 function isFeesPending($data){ 
-	$fees_more_than_course_fees = false;
+	
+	$is_trx_more_than_pending = false;
 	$student_id = $data['student_id'];
+	$current_trx = 0;
 	$paid_flag = true;
 	$courses = Models\StudentsRegistrationCourses::where('students_registration_id',$data['student_id'])->get();
+	
 	foreach ($courses as $key => $course) {
 		$course_details = $course->courseDetails;
 		$total_submitted_fees = findTotalCourseFeeSubmitted($student_id,$course_details->id);
+
 		if($course_details->course_fees>$total_submitted_fees)
 			$paid_flag = false;
-		$total_submitted_fees = 
-		$fees = $course_details->course_fees;
+    
+    $total_submitted_fees = $total_submitted_fees + $data['fees_amount']; 
+		
+		if($course_details->course_fees < $total_submitted_fees)
+			$is_trx_more_than_pending = true; 
+
+		return [
+			'is_pending' => $paid_flag,
+			'trx_more_than_pending' => $is_trx_more_than_pending,
+		];
 	
 	}
+
 	return $paid_flag;
 }

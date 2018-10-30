@@ -38,6 +38,30 @@
 		 		</div>
 		 	</form>
 		 </div>
+		
+		<div class="text-center">
+			<h2>Opted Courses</h2>
+			<table class="table table-bordered">
+				<tr>
+					<td>Course Name</td>
+					<td>Total Fees</td>
+					<td>Fees Submitted</td>
+					<td>Pending Fees</td>
+				</tr>
+
+				<?php  foreach ($pending_fees_details as $key => $details): ?>
+				<tr>
+					<td><strong><?=$details['course_name']?></strong></td>
+					<td><?=$details['total_fees']?></td>
+					<td><span class="color-green"><?=$details['fees_submitted']?></span></td>
+					<td><span class="color-red"><?=$details['fees_pending'] == 0 ? '<span class="color-green">PAID</span>' : $details['fees_pending']?></span></td>
+				</tr>
+					
+				<?php endforeach ?>
+			</table>
+		</div>
+
+
 		<div class="text-center">
 			<h2>Student Details</h2>
 			<table class="table table-bordered">
@@ -76,6 +100,8 @@
 
 			</table>
 		</div>
+
+		
 
 	</div>
 	<!-- left block ends -->

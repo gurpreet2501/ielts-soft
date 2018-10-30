@@ -43,18 +43,27 @@ class Fees extends CI_Controller
 	{ 
 
 		$courses = Models\StudentsRegistrationCourses::where('students_registration_id', $id)->with('courseDetails')->get();
-		   
+		
+		if(!count($courses)){
+			failure('Please assign the course to student first');
+			redirect('student/add_student');
+		}
+
 		$student_details = Models\StudentsRegistration::where('id',$id)->with('feesDetails.courseDetails')->first();
 
  		$student_details = $student_details->toArray();
 		$fees_details = [];
+
 		if(count($student_details['fees_details'])){
-			$fees_details = clubFeeTransactions($student_details['fees_details']);
+			$fees_trx = clubFeeTransactions($student_details['fees_details']);
 		}
-		
+
+		$pending_fees_details = findPendingFees($courses,$fees_trx);
+
 		$data = [
 			'student_details' => $student_details,
-			'fees_details' => $fees_details,
+			'fees_details' => $fees_trx,
+			'pending_fees_details' => $pending_fees_details,
 			'courses' => $courses,
 			'student_id' => $id
 		];
@@ -70,18 +79,18 @@ class Fees extends CI_Controller
 	} 
 
 	public function pay(){
+		
 		$data = $_POST;
 				
-		Models\FeesDetails::create([
-			'fees_amount' => $data['fees_amount'],
-			'students_registration_id' => $data['student_id'],
-			'course_id' => $data['course_id'],
-			'fee_submission_date' => date('Y-m-d H:i:s')
-		]);
-
 		$flag = isFeesPending($data);
+		
+		if($flag['trx_more_than_pending']){
+			failure('You cant pay more than the pending amount.');
+			redirect('fees/details/'.$data['student_id']);
+		}
 
-		if($flag)
+
+		if($flag['is_pending'])
 			Models\StudentsRegistration::where('id',$data['student_id'])->update([
 				'fees_status' => 'PAID'
 			]);
@@ -90,10 +99,19 @@ class Fees extends CI_Controller
 				'fees_status' => 'PENDING'
 			]);
 
+
+		Models\FeesDetails::create([
+			'fees_amount' => $data['fees_amount'],
+			'students_registration_id' => $data['student_id'],
+			'course_id' => $data['course_id'],
+			'fee_submission_date' => date('Y-m-d H:i:s')
+		]);
+
+
 		success('Fees Paid Successfully');
+
 		redirect('fees/details/'.$data['student_id']);
 	}
-
 
 	function on_update_encrypt_password_callback($post_array){
 		if($post_array['password'] != '__DEFAULT_PASSWORD_'){

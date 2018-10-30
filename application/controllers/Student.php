@@ -45,6 +45,8 @@ class Student extends CI_Controller
 		$attendence_data = Models\StudentsAttendence::with('student')
 																						->with('course')
 																						->with('machine')
+																						->where('created_at','>=',date('Y-m-d 00:00:00'))
+																						->where('created_at','<=',date('Y-m-d 23:59:59'))
 																						->where('course_id',$course_id)->get();
 		$this->load->view('student/filter_students_attendence',['attendence_data' => $attendence_data]);
 	}
@@ -83,7 +85,7 @@ class Student extends CI_Controller
 
 			$crud = new grocery_CRUD();
 			
-			$crud->columns('student_unique_code','email','phone','registration_date','registration_confirmation','fees_status');
+			$crud->columns('name','email','phone','registration_date','registration_confirmation','fees_status');
 			$crud->set_table('students_registration');
 			$crud->add_action('Pay Fees', '', 'fees/details','fa fa-cc-visa');
 			$crud->where('added_by',user_id());
@@ -92,23 +94,24 @@ class Student extends CI_Controller
 			$crud->display_as('state_id','State');
 			$crud->display_as('country_id','Country');
 			$crud->callback_after_insert(array($this, 'update_student_unique_code'));
-			$crud->set_relation('country_id','countries','name');
-			$crud->set_relation('state_id','states','name');
-			$crud->set_relation('city_id','cities','name');
-			$crud->set_lang_string('update_error', "Email field cant be empty");
-			$crud->set_lang_string('insert_error', 'Email field cant be empty');
+			$crud->field_type('city_id','hidden',1);
+			$crud->field_type('state_id','hidden',1);
+			$crud->field_type('country_id','hidden',1);
+			$crud->set_lang_string('update_error', "Please fill in the required fields");
+			$crud->set_lang_string('insert_error', 'Please fill in the required fields');
 			$crud->callback_before_insert(array($this,'student_validations'));
 			$crud->callback_before_update(array($this,'student_validations'));
 
-			$crud->set_rules('name', 'Name', 'alpha');
+			$crud->set_rules('name', 'Name', 'alpha_numeric_spaces');
 			// $crud->callback_after_update(array($this, 'update_student_unique_code'));
 			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
 			$crud->unset_texteditor('address');
-		
+			$crud->add_action('More', '', 'demo/action_more','ui-icon-plus');
+			$crud->add_action('Smileys', 'http://www.grocerycrud.com/assets/uploads/general/smiley.png', 'demo/action_smiley');
 			// $crud->unique_fields(array('email','phone'));
 			$crud->required_fields('name','phone','city','address','highest_qualification');
 			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');
-			$crud->set_rules('email', 'email', 'valid_email');
+			$crud->set_rules('email', 'email_id', 'valid_email');
 			if($crud->getState()=='add'){
 				$crud->field_type('registration_confirmation','hidden','PENDING');
 			  $crud->field_type('fees_status','hidden');
@@ -121,18 +124,21 @@ class Student extends CI_Controller
 			$crud->field_type('registration_date','hidden',date('Y-m-d H:i:s'));
 			$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
 			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
-			$crud->set_theme('bootstrap');
+			// $crud->set_theme('bootstrap');
 	    $output = $crud->render();
 			$this->_example_output($output);
 
 	} 
 
 	function student_validations($post_array, $primary_key=null) {
-	
-		$fields = ['name','email','phone','city','address','highest_qualification'];
+		
+		$err = '';
+		$fields = ['name','email'];
 		foreach ($fields as $key => $field) {
-			if(empty($post_array[$field]))	 
+			if(empty($post_array[$field]))	 {
+				
 				return false;
+			}
 		}
 		
 		return true;
@@ -166,8 +172,8 @@ class Student extends CI_Controller
 			$crud->field_type('added_by','hidden',user_id());
 			$crud->callback_before_insert(array($this,'validate_no_of_chars'));
 			$crud->callback_before_update(array($this,'validate_no_of_chars'));
-			$crud->set_lang_string('insert_error', 'Card Serial must be 14 characters long');
-			$crud->set_lang_string('update_error', 'Card Serial must be 14 characters long');
+			$crud->set_lang_string('insert_error', 'Card Serial Max Length is 14 characters');
+			$crud->set_lang_string('update_error', 'Card Serial Max Length is 14 characters');
   		$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
 			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
 			$crud->set_theme('bootstrap');
@@ -178,7 +184,7 @@ class Student extends CI_Controller
 
 	function validate_no_of_chars($post,$primary_key=null){  
 
-		if(strlen($post['card_serial']) < 14 || strlen($post['card_serial']) > 14)
+		if(strlen($post['card_serial']) > 14)
 			return false;
 		return true;
 	
