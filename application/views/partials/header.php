@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-<html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">.
 	<!-- <link rel="stylesheet" type="text/css" href="<?php //base_url('css/date-picker.css') ?>"> -->
 	<!-- <link rel="stylesheet" type="text/css" href="<?php //base_url('css/jquery-ui.css')?>"> -->
 	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/bootstrap.min.css')?>">
 	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/style.css')?>">
-	<title>Admin - Navdhana</title>
+	<link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/app-style.css')?>">
+	<title>Admin Panel</title>
 </head>
 <body>
  <div class="container">

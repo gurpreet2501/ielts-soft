@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">.
   <title><?= isset($title) ? $title . ' - ' : ''; ?>Admin</title>
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +62,7 @@ a:hover
                 <span class="icon-bar"></span>
               </button>
              <?php if($this->tank_auth->is_logged_in()): ?>
-              <a class="navbar-brand" href="<?=site_url('admin')?>">Logged in as <em><strong><?=$this->tank_auth->get_username()?></strong></em></a>
+              <a class="navbar-brand" href="<?=site_url('admin')?>"><strong><?=strtoupper($this->tank_auth->get_username())?></strong></a>
             <?php endif; ?>
             </div>
             <!-- Top Menu Items -->
@@ -72,12 +73,7 @@ a:hover
                 <a href="<?=site_url('/auth/logout')?>"><i class="fa fa-fw fa-power-off"></i>Logout</a>
               </li>
             <?php endif; ?>
-            
-            <?php if(!$this->tank_auth->is_logged_in()): ?>
-              <li>
-                <a href="<?=site_url('/auth/login')?>"><i class="fa fa-fw fa-power-off"></i>Login</a>
-              </li>
-            <?php endif; ?>
+         
 
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->

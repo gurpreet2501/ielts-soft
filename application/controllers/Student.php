@@ -107,7 +107,7 @@ class Student extends CI_Controller
 			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
 			$crud->unset_texteditor('address');
 			$crud->add_action('More', '', 'demo/action_more','ui-icon-plus');
-			$crud->add_action('Smileys', 'http://www.grocerycrud.com/assets/uploads/general/smiley.png', 'demo/action_smiley');
+			$crud->add_action('Generate Link', base_url('assets/images/feedback_link.png'), 'feedback/send_link');
 			// $crud->unique_fields(array('email','phone'));
 			$crud->required_fields('name','phone','city','address','highest_qualification');
 			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');

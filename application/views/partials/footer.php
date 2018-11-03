@@ -1,6 +1,6 @@
 <div class="spacer-100"></div>
 </div> <!-- container ends -->
-
+<?php $cacheVer = rand(1,10000); ?>     
 
  <script src="<?=base_url('env.js?v='.$cacheVer);?>"></script> 
  <script src="<?=base_url('assets/js/env-support.js?v='.$cacheVer);?>"></script> 
