@@ -107,7 +107,7 @@ class Student extends CI_Controller
 			$crud->set_relation_n_n('courses', 'students_registration_courses', 'courses', 'students_registration_id', 'course_id', 'course_name','',['courses.added_by' => user_id()]);
 			$crud->unset_texteditor('address');
 			$crud->add_action('More', '', 'demo/action_more','ui-icon-plus');
-			$crud->add_action('Generate Link', base_url('assets/images/feedback_link.png'), 'feedback/send_link');
+			$crud->add_action('Generate Link', base_url('assets/images/feedback_link.png'), 'feedback/send_link/'.user_id());
 			// $crud->unique_fields(array('email','phone'));
 			$crud->required_fields('name','phone','city','address','highest_qualification');
 			$crud->set_field_upload('profile_image','assets/uploads/students/profile_images');
@@ -164,9 +164,43 @@ class Student extends CI_Controller
 			$this->_example_output($output);
 
 	}	
+	
+	function view_feedbacks(){
+		
+			$crud = new grocery_CRUD();
+			$crud->set_table('feedback');
+			$crud->where('added_by', user_id());
+			$crud->display_as('student_id', 'Student Details');
+			$crud->unset_read();
+			$crud->columns('student_id','speaking','listening','reading','writing');
+			$crud->callback_column('student_id',array($this,'getStudentDetails'));
+			$crud->callback_after_update(array($this, 'delete_inactive_files'));
+			$crud->callback_column('file_url',array($this,'_callback_webpage_url'));
+  		$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
+			$crud->field_type('updated_at','hidden',date('Y-m-d H:i:s'));
+			$crud->set_theme('bootstrap');
+	    $output = $crud->render();
+			$this->_example_output($output);
+
+	}	
+
+	public function getStudentDetails($student_id, $row)
+	{
+		$student = Models\StudentsRegistration::where('id', $student_id)->first();
+		if(!$student)
+			return '';
+		$disp  = "<div class='align-left'><strong>ID</strong> ".$student->student_unique_code."<br/>";
+		$disp .= "<strong>Name </strong> ".$student->name."<br/>";
+		$disp .= "<strong>Phone</strong>  ".$student->phone."<br/>";
+		$disp .= "<strong>Email</strong> ".$student->email."<br/></div>";
+		
+		return $disp;	
+	}
+
 	function assign_cards(){
 			$crud = new grocery_CRUD();
 			$crud->set_table('assigned_cards');
+			$crud->unset_read();
 			$crud->where('assigned_cards.added_by',user_id());
 			$crud->set_relation('student_id','students_registration','{student_unique_code} - {name}',array('students_registration.added_by' => user_id()));
 			$crud->field_type('added_by','hidden',user_id());

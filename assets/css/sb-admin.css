@@ -36,7 +36,11 @@ body {
 
 }
 
+.align-left {
 
+    text-align: left;
+
+}
 
 .color-red{
     color:red;

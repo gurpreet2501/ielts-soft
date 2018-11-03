@@ -8,6 +8,7 @@
 			</h4>
 			<form method="post" action="<?=site_url('feedback/form_post')?>">
 				<input type="hidden" name="student_id" value="<?=$student_id?>"/>
+				<input type="hidden" name="added_by" value="<?=$added_by?>"/>
 				<!-- Speaking -->
 				<div class="row">
 					<div class="col-md-3">

@@ -20,5 +20,8 @@
     <li class="">
       <a href='<?=site_url('student/view_attendence')?>'>View Attendence</a> 
     </li>
+    <li class="">
+      <a href='<?=site_url('student/view_feedbacks')?>'>Feedbacks</a> 
+    </li>
     
   </ul>

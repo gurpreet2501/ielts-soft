@@ -11,10 +11,11 @@ class Feedback extends CI_Controller
 		// $this->load->library('tank_auth');
 	}
 
-	function form($student_id){
+	function form($added_by,$student_id){
 		
 		$this->load->view('feedback/form',[
-			'student_id' => $student_id 
+			'added_by' => $added_by,
+			'student_id' => $student_id
 		]);
 
 	}
@@ -36,13 +37,13 @@ class Feedback extends CI_Controller
 		Models\Feedback::create($_POST);
 
 		success('Feedback Submitted successfully');
-		return redirect('feedback/form/'.$_POST['student_id']);
+		return redirect('feedback/form/'.$_POST['added_by'].'/'.$_POST['student_id']);
 
 	}
 	
-	function send_link($student_id){
+	function send_link($added_by,$student_id){
 		
-	  $student = Models\StudentsRegistration::where('id',$student_id)->first();
+	  $student = Models\StudentsRegistration::where('id', $student_id)->first();
 	  
 	  if(!$student->phone){
 	  		failure('Student phone no missing. Phone is required to send feedback link');
@@ -51,7 +52,7 @@ class Feedback extends CI_Controller
 			}	
 
 		$message = "Click url for feedback: ";
-		$message .= site_url('feedback/form/'.$student_id);	
+		$message .= site_url('feedback/form/'.user_id().'/'.$student_id);	
 		
 		Sms::send($student->phone,$message);
 		success('Feedback link sent successfully on registered mobile no');
